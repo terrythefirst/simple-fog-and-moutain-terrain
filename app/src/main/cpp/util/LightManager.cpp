@@ -45,7 +45,7 @@ void LightManager::setlightSpecular(float lightSpecularRIn,float lightSpecularGI
 }
 void LightManager::move()
 {
-    lightFWJ=lightFWJ+0.5;
+    lightFWJ=lightFWJ+0.1;
     float tempLx=sin(lightFWJ/180*3.14150265)*150;
     float tempLz=cos(lightFWJ/180*3.14150265)*150;
     LightManager::setLightPosition(tempLx,200,tempLz);

@@ -15,9 +15,9 @@ layout (location = 0) in vec2 inTexCoor; //接收的顶点纹理坐标
 layout (location = 1) in vec4 inLightQD; //接收的最终光照强度
 layout (location = 2) in vec4 pLocation;//当如的当前顶点位置（世界坐标系）
 layout (location = 0) out vec4 outColor; //输出到管线的片元颜色
-const float slabY=80.0f;//雾平面的高度
-const float QFheight=0.80f;//雾平面起伏高度
-const float WAngleSpan=1*3.1415926f;//雾的总角度跨度
+const float slabY=90.0f;//雾平面的高度
+const float QFheight=10.0f;//雾平面起伏高度
+const float WAngleSpan=12*3.1415926f;//雾的总角度跨度
 
 float tjFogCal(vec4 pLocation){//计算体积雾浓度因子的方法
    float xAngle=pLocation.x/960.0f*WAngleSpan;//计算出顶点X坐标折算出的角度
@@ -30,10 +30,9 @@ float tjFogCal(vec4 pLocation){//计算体积雾浓度因子的方法
       //求出射线与雾平面的交点坐标
 	  float xJD=myBufferVals.uCamaraLocation.x+(pLocation.x-myBufferVals.uCamaraLocation.x)*t;
 	  float zJD=myBufferVals.uCamaraLocation.z+(pLocation.z-myBufferVals.uCamaraLocation.z)*t;
-	  vec3 locationJD=vec3(xJD,slabY,zJD);
+	  vec3 locationJD=vec3(xJD,slabY+slabYFactor,zJD);
 
 	  float L=distance(locationJD,pLocation.xyz);//求出交点到待处理片元位置的距离
-	  //float L = 10.0;
 	  float L0=20.0;
 	  return L0/(L+L0);//计算体积雾的雾浓度因子
    }else{
@@ -59,9 +58,8 @@ void main() { //主函数
 	outColor = dT1*dT.r+dT2*dT.g+dT3*dT.b+dT4*dT.a; //叠加细节纹理的颜色值
 	outColor = outColor + cT; //叠加基础颜色值
 	outColor = outColor - 0.8; //调整整体颜色
-	//outColor = outColor - 0.5; //调整整体颜色
 	outColor = inLightQD * outColor; //计算最终颜色值
 
 	float fogFactor=tjFogCal(pLocation);//计算雾浓度因子
-	outColor=fogFactor*outColor+ (1.0-fogFactor)*vec4(0.9765,0.99,0.99,0.0); //给此片元最终颜色值
+	outColor=fogFactor*outColor+ (1.0-fogFactor)*vec4(0.9765,0.98,0.99,0.0); //给此片元最终颜色值
 }

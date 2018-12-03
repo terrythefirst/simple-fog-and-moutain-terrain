@@ -635,7 +635,7 @@ void MyVulkanManager::initMatrix()
 }
 
 int operatorT = 1;
-float span = 0.002f*3.1415926f;
+float span = 0.004f*3.1415926f;
 float uFactor = 0.0f;
 float maxFactor = 2.0f*3.1415926f;
 void MyVulkanManager::flushUniformBuffer()
