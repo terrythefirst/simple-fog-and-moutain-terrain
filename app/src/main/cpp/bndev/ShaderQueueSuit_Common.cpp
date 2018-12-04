@@ -263,8 +263,8 @@ void ShaderQueueSuit_Common::init_descriptor_set(VkDevice& device)
 }
 void ShaderQueueSuit_Common::create_shader(VkDevice& device)
 {
-    std::string vertStr= FileUtil::loadAssetStr("shader/commonTexLight.vert");
-    std::string fragStr= FileUtil::loadAssetStr("shader/commonTexLight.frag");
+    std::string vertStr= FileUtil::loadAssetStr("shader/commonTexLand.vert");
+    std::string fragStr= FileUtil::loadAssetStr("shader/commonTexLand.frag");
     shaderStages[0].sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
     shaderStages[0].pNext = NULL;
     shaderStages[0].pSpecializationInfo = NULL;
