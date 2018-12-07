@@ -32,7 +32,7 @@ TexDrawableObject::TexDrawableObject(float* vdataIn, int dataByteCount, int vCou
 	VkFlags requirements_mask = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 	bool flag = memoryTypeFromProperties(memoryroperties, mem_reqs.memoryTypeBits, requirements_mask, &alloc_info.memoryTypeIndex);
 	assert(flag);
-	LOGE("确定内存类型成功 类型索引为=======%d", alloc_info.memoryTypeIndex);
+	LOGE("确定内存类型成功 类型索引�?=======%d", alloc_info.memoryTypeIndex);
 	result = vk::vkAllocateMemory(device, &alloc_info, NULL, &vertexDataMem);
 	assert(result == VK_SUCCESS);
 	uint8_t *pData;

@@ -63,5 +63,5 @@ void main() {
                               );
     gl_Position = myConstantVals.mvp * vec4(pos,1.0);
     outTexCoor = inTexCoor;
-	pLocation=myConstantVals.mm * vec4(pos,1.0);//计算世界坐标系下顶点位置
+	pLocation=myConstantVals.mm * vec4(pos,1.0);
 }

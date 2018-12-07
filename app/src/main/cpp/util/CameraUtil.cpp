@@ -13,19 +13,14 @@ float CameraUtil::cy = 80;
 float CameraUtil::cz = 0;
 void CameraUtil::calCamera()
 {
-	//计算当前观察角度下摄像机的位置（基于俯仰角重新计算 X轴为旋转轴）
 	cy = float(sin(toRadians(yj))*CAMERA_R + ty);
 	float cxz = float(cos(toRadians(yj))*CAMERA_R);
-	//（基于偏航角重新计算摄像机位置 Y轴为旋转轴）
 	cx = float(sin(toRadians(degree))*cxz + tx);
 	cz = float(cos(toRadians(degree))*cxz + tz);
-
-	//计算当前摄像机的UP向量
 	float upY = float(cos(toRadians(yj)));
 	float upXZ = float(sin(toRadians(yj)));
 	float upX = float(-upXZ * sin(toRadians(degree)));
 	float upZ = float(-upXZ * cos(toRadians(degree)));
-	//设置摄像机9矩阵
 	camera9Para[0] = cx;
 	camera9Para[1] = cy;
 	camera9Para[2] = cz;

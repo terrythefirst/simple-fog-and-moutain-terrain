@@ -99,14 +99,14 @@ void MyVulkanManager::init_vulkan_instance()
 void MyVulkanManager::destroy_vulkan_instance()
 {
     vk::vkDestroyInstance(instance, NULL);
-    LOGE("Vulkan实例销毁完毕!");
+    LOGE("Vulkan实例�?毁完�?!");
 }
 void MyVulkanManager::enumerate_vulkan_phy_devices()
 {
     gpuCount=0;
     VkResult result = vk::vkEnumeratePhysicalDevices(instance, &gpuCount, NULL);
     assert(result==VK_SUCCESS);
-    LOGE("[Vulkan硬件设备数量为%d个]",gpuCount);
+    LOGE("[Vulkan硬件设备数量�?%d个]",gpuCount);
     gpus.resize(gpuCount);
     result = vk::vkEnumeratePhysicalDevices(instance, &gpuCount, gpus.data());
     assert(result==VK_SUCCESS);
@@ -125,7 +125,7 @@ void MyVulkanManager::create_vulkan_devices()
         if (queueFamilyprops[i].queueFlags & VK_QUEUE_GRAPHICS_BIT){
             queueInfo.queueFamilyIndex = i;
             queueGraphicsFamilyIndex=i;
-            LOGE("[支持GRAPHICS工作的一个队列家族的索引为%d]",i);
+            LOGE("[支持GRAPHICS工作的一个队列家族的索引�?%d]",i);
             LOGE("[此家族中的实际队列数量是%d]",queueFamilyprops[i].queueCount);
             found = true;
             break;
@@ -154,7 +154,7 @@ void MyVulkanManager::create_vulkan_devices()
 void MyVulkanManager::destroy_vulkan_devices()
 {
     vk::vkDestroyDevice(device, NULL);
-    LOGE("逻辑设备销毁完毕！");
+    LOGE("逻辑设备�?毁完毕！");
 }
 void MyVulkanManager::create_vulkan_CommandBuffer(){
     VkCommandPoolCreateInfo cmd_pool_info = {};
@@ -211,14 +211,14 @@ void MyVulkanManager::create_vulkan_swapChain()
     PFN_vkCreateAndroidSurfaceKHR fpCreateAndroidSurfaceKHR=
             (PFN_vkCreateAndroidSurfaceKHR)vk::vkGetInstanceProcAddr(instance,"vkCreateAndroidSurfaceKHR");
     if (fpCreateAndroidSurfaceKHR == NULL){
-        LOGE( "找不到vkCreateAndroidSurfaceKHR扩展函数！" );
+        LOGE( "找不到vkCreateAndroidSurfaceKHR扩展函数�?" );
     }
     VkResult result = fpCreateAndroidSurfaceKHR(instance,&createInfo, nullptr, &surface);
     assert(result==VK_SUCCESS);
     VkBool32 *pSupportsPresent = (VkBool32 *)malloc(queueFamilyCount * sizeof(VkBool32));
     for (uint32_t i = 0; i < queueFamilyCount; i++){
         vk::vkGetPhysicalDeviceSurfaceSupportKHR(gpus[0], i, surface, &pSupportsPresent[i]);
-        LOGE("队列家族索引=%d %s显示",i,(pSupportsPresent[i]==1?"支持":"不支持"));
+        LOGE("队列家族索引=%d %s显示",i,(pSupportsPresent[i]==1?"支持":"不支�?"));
     }
     queueGraphicsFamilyIndex = UINT32_MAX;
     queuePresentFamilyIndex = UINT32_MAX;
@@ -250,7 +250,7 @@ void MyVulkanManager::create_vulkan_swapChain()
     free(pSupportsPresent);
     if (queueGraphicsFamilyIndex == UINT32_MAX || queuePresentFamilyIndex == UINT32_MAX)
     {
-        LOGE("没有找到支持Graphis（图形）或Present（显示）工作的队列家族");
+        LOGE("没有找到支持Graphis（图形）或Present（显示）工作的队列家�?");
         assert(false);
     }
     uint32_t formatCount;
@@ -271,12 +271,12 @@ void MyVulkanManager::create_vulkan_swapChain()
     assert(result == VK_SUCCESS);
     result = vk::vkGetPhysicalDeviceSurfacePresentModesKHR(gpus[0], surface, &presentModeCount, NULL);
     assert(result == VK_SUCCESS);
-    LOGE("显示模式数量为%d",presentModeCount);
+    LOGE("显示模式数量�?%d",presentModeCount);
     presentModes.resize(presentModeCount);
     result = vk::vkGetPhysicalDeviceSurfacePresentModesKHR(gpus[0], surface, &presentModeCount, presentModes.data());
     for(int i=0;i<presentModeCount;i++)
     {
-        LOGE("显示模式[%d]编号为%d",i,presentModes[i]);
+        LOGE("显示模式[%d]编号�?%d",i,presentModes[i]);
     }
     VkPresentModeKHR swapchainPresentMode = VK_PRESENT_MODE_FIFO_KHR;
     for (size_t i = 0; i < presentModeCount; i++)
@@ -310,7 +310,7 @@ void MyVulkanManager::create_vulkan_swapChain()
         {
             swapchainExtent.height = surfCapabilities.maxImageExtent.height;
         }
-        LOGE("使用自己设置的 宽度 %d 高度 %d",swapchainExtent.width,swapchainExtent.height);
+        LOGE("使用自己设置�? 宽度 %d 高度 %d",swapchainExtent.width,swapchainExtent.height);
     }
     else
     {
@@ -363,7 +363,7 @@ void MyVulkanManager::create_vulkan_swapChain()
     assert(result == VK_SUCCESS);
     result = vk::vkGetSwapchainImagesKHR(device, swapChain, &swapchainImageCount, NULL);
     assert(result == VK_SUCCESS);
-    LOGE("[SwapChain中的Image数量为%d]",swapchainImageCount);
+    LOGE("[SwapChain中的Image数量�?%d]",swapchainImageCount);
     swapchainImages.resize(swapchainImageCount);
     result = vk::vkGetSwapchainImagesKHR(device, swapChain, &swapchainImageCount, swapchainImages.data());
     assert(result == VK_SUCCESS);
@@ -395,10 +395,10 @@ void MyVulkanManager::destroy_vulkan_swapChain()
     for (uint32_t i = 0; i < swapchainImageCount; i++)
     {
         vk::vkDestroyImageView(device, swapchainImageViews[i], NULL);
-        LOGE("[销毁SwapChain ImageView %d 成功]",i);
+        LOGE("[�?毁SwapChain ImageView %d 成功]",i);
     }
     vk::vkDestroySwapchainKHR(device, swapChain, NULL);
-    LOGE("销毁SwapChain成功!");
+    LOGE("�?毁SwapChain成功!");
 }
 void MyVulkanManager::create_vulkan_DepthBuffer()
 {
@@ -408,16 +408,16 @@ void MyVulkanManager::create_vulkan_DepthBuffer()
     if (depthFormatProps.linearTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
     {
         image_info.tiling = VK_IMAGE_TILING_LINEAR;
-        LOGE("tiling为VK_IMAGE_TILING_LINEAR！");
+        LOGE("tiling为VK_IMAGE_TILING_LINEAR�?");
     }
     else if (depthFormatProps.optimalTilingFeatures & VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT)
     {
         image_info.tiling = VK_IMAGE_TILING_OPTIMAL;
-        LOGE("tiling为VK_IMAGE_TILING_OPTIMAL！");
+        LOGE("tiling为VK_IMAGE_TILING_OPTIMAL�?");
     }
     else
     {
-        LOGE("不支持VK_FORMAT_D16_UNORM！");
+        LOGE("不支持VK_FORMAT_D16_UNORM�?");
     }
     image_info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
     image_info.pNext = NULL;
@@ -464,7 +464,7 @@ void MyVulkanManager::create_vulkan_DepthBuffer()
     VkFlags requirements_mask=0;
     bool flag=memoryTypeFromProperties(memoryroperties, mem_reqs.memoryTypeBits,requirements_mask,&mem_alloc.memoryTypeIndex);
     assert(flag);
-    LOGE("确定内存类型成功 类型索引为%d",mem_alloc.memoryTypeIndex);
+    LOGE("确定内存类型成功 类型索引�?%d",mem_alloc.memoryTypeIndex);
     result = vk::vkAllocateMemory(device, &mem_alloc, NULL, &memDepth);
     assert(result == VK_SUCCESS);
     result = vk::vkBindImageMemory(device, depthImage, memDepth, 0);
@@ -478,7 +478,7 @@ void MyVulkanManager::destroy_vulkan_DepthBuffer()
     vk::vkDestroyImageView(device, depthImageView, NULL);
     vk::vkDestroyImage(device, depthImage, NULL);
     vk::vkFreeMemory(device, memDepth, NULL);
-    LOGE("销毁深度缓冲相关成功!");
+    LOGE("�?毁深度缓冲相关成�?!");
 }
 void MyVulkanManager::create_render_pass()
 {
@@ -580,7 +580,7 @@ void MyVulkanManager::create_frame_buffer() {
         attachments[0] = swapchainImageViews[i];
         VkResult result = vk::vkCreateFramebuffer(device,&fb_info, NULL, &framebuffers[i]);
         assert(result == VK_SUCCESS);
-        LOGE("[创建帧缓冲%d成功！]", i);
+        LOGE("[创建帧缓�?%d成功！]", i);
     }
 }
 void MyVulkanManager::destroy_frame_buffer()
@@ -590,7 +590,7 @@ void MyVulkanManager::destroy_frame_buffer()
         vk::vkDestroyFramebuffer(device, framebuffers[i], NULL);
     }
     free(framebuffers);
-    LOGE("销毁帧缓冲成功！");
+    LOGE("�?毁帧缓冲成功�?");
 }
 void MyVulkanManager::createDrawableObject()
 {
@@ -633,14 +633,12 @@ void MyVulkanManager::initMatrix()
 	LightManager::setlightDiffuse(0.9f, 0.9f, 0.9f, 1.0f);
 	LightManager::setlightSpecular(0.4f, 0.4f, 0.4f, 1.0f);
 }
-
 int operatorT = 1;
 float span = 0.004f*3.1415926f;
 float uFactor = 0.0f;
 float maxFactor = 2.0f*3.1415926f;
 void MyVulkanManager::flushUniformBuffer()
 {
-    //创建顶点着色器一致块 用于计算光照
     float vertexUniformData[20] =
             {
                     MatrixState3D::cx,MatrixState3D::cy,MatrixState3D::cz,1.0,
@@ -654,8 +652,6 @@ void MyVulkanManager::flushUniformBuffer()
     assert(result == VK_SUCCESS);
     memcpy(pData, vertexUniformData, sqsCT->bufferByteCount);
     vk::vkUnmapMemory(device, sqsCT->memUniformBuf);
-
-    //创建片元着色器一致块 用于计算体积雾
     uFactor = uFactor + operatorT * span;
     if (uFactor > maxFactor)
     {
@@ -676,25 +672,18 @@ void MyVulkanManager::flushTexToDesSet()
 	for (int i = 0; i<TextureManager::texNames.size()/6; i++)
 	{
 		sqsCT->writes[0].dstSet = sqsCT->descSet[i];
-		/*颜色纹理*/
 		sqsCT->writes[1].dstSet = sqsCT->descSet[i];
 		sqsCT->writes[1].pImageInfo = &(TextureManager::texImageInfoList[TextureManager::texNames[i * 6 + 0]]);
-		/*细节map*/
 		sqsCT->writes[2].dstSet = sqsCT->descSet[i];
 		sqsCT->writes[2].pImageInfo = &(TextureManager::texImageInfoList[TextureManager::texNames[i * 6 + 1]]);
-		/*细节纹理1*/
 		sqsCT->writes[3].dstSet = sqsCT->descSet[i];
 		sqsCT->writes[3].pImageInfo = &(TextureManager::texImageInfoList[TextureManager::texNames[i * 6 + 2]]);
-		/*细节纹理2*/
 		sqsCT->writes[4].dstSet = sqsCT->descSet[i];
 		sqsCT->writes[4].pImageInfo = &(TextureManager::texImageInfoList[TextureManager::texNames[i * 6 + 3]]);
-		/*细节纹理3*/
 		sqsCT->writes[5].dstSet = sqsCT->descSet[i];
 		sqsCT->writes[5].pImageInfo = &(TextureManager::texImageInfoList[TextureManager::texNames[i * 6 + 4]]);
-		/*细节纹理4*/
 		sqsCT->writes[6].dstSet = sqsCT->descSet[i];
 		sqsCT->writes[6].pImageInfo = &(TextureManager::texImageInfoList[TextureManager::texNames[i * 6 + 5]]);
-
         sqsCT->writes[7].dstSet = sqsCT->descSet[i];
         vk::vkUpdateDescriptorSets(device, 8, sqsCT->writes, 0, NULL);
 	}

@@ -1,6 +1,4 @@
-package com.bn.Sample9_6;
-
-
+package com.bn.Sample12_13;
 public class MyActivity extends android.app.NativeActivity
 {
     static

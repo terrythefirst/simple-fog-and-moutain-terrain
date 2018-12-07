@@ -92,7 +92,7 @@ void TextureManager::init_SPEC_2D_Textures(std::string texName, VkDevice& device
     VkFormatProperties formatProps;
     vk::vkGetPhysicalDeviceFormatProperties(gpu, format, &formatProps);
     bool needStaging = (!(formatProps.linearTilingFeatures &VK_FORMAT_FEATURE_SAMPLED_IMAGE_BIT)) ? true : false;
-    LOGE("TextureManager %s", (needStaging? "不能使用线性瓦片纹理" : "能使用线性瓦片纹理"));
+    LOGE("TextureManager %s", (needStaging? "不能使用线�?�瓦片纹�?" : "能使用线性瓦片纹�?"));
     if (needStaging)
     {
         VkBuffer tempBuf;
@@ -119,7 +119,7 @@ void TextureManager::init_SPEC_2D_Textures(std::string texName, VkDevice& device
         bool flag = memoryTypeFromProperties(memoryroperties, mem_reqs.memoryTypeBits, requirements_mask, &alloc_info.memoryTypeIndex);
         if (flag)
         {
-            LOGE("确定内存类型成功 类型索引为%d", alloc_info.memoryTypeIndex);
+            LOGE("确定内存类型成功 类型索引�?%d", alloc_info.memoryTypeIndex);
         }
         else
         {

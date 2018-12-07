@@ -7,7 +7,7 @@ public:
 	static float tx;
 	static float ty;
 	static float tz;
-	static float cx;//摄像机位置（position）
+	static float cx;
 	static float cy;
 	static float cz;
 	static float degree;

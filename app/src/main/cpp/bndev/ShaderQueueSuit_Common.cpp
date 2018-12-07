@@ -30,7 +30,7 @@ void ShaderQueueSuit_Common::create_uniform_buffer(VkDevice& device,VkPhysicalDe
     alloc_info.allocationSize = mem_reqs.size;
     VkFlags requirements_mask=VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
     bool flag=memoryTypeFromProperties(memoryroperties, mem_reqs.memoryTypeBits,requirements_mask, &alloc_info.memoryTypeIndex);
-    if(flag){LOGE("确定内存类型成功 类型索引为%d",alloc_info.memoryTypeIndex);}else{LOGE("确定内存类型失败!");}
+    if(flag){LOGE("确定内存类型成功 类型索引�?%d",alloc_info.memoryTypeIndex);}else{LOGE("确定内存类型失败!");}
     result = vk::vkAllocateMemory(device, &alloc_info, NULL, &memUniformBuf);
     assert(result == VK_SUCCESS);
     result = vk::vkBindBufferMemory(device, uniformBuf, memUniformBuf, 0);
@@ -38,9 +38,7 @@ void ShaderQueueSuit_Common::create_uniform_buffer(VkDevice& device,VkPhysicalDe
     uniformBufferInfo.buffer = uniformBuf;
     uniformBufferInfo.offset = 0;
     uniformBufferInfo.range = bufferByteCount;
-
     bufferByteCount2 = sizeof(float) * 5;
-
     VkBufferCreateInfo buf_info2 = {};
     buf_info2.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
     buf_info2.pNext = NULL;
@@ -52,31 +50,21 @@ void ShaderQueueSuit_Common::create_uniform_buffer(VkDevice& device,VkPhysicalDe
     buf_info2.flags = 0;
     result = vk::vkCreateBuffer(device, &buf_info2, NULL, &uniformBuf2);
     assert(result == VK_SUCCESS);
-
     VkMemoryRequirements mem_reqs2;
     vk::vkGetBufferMemoryRequirements(device, uniformBuf2, &mem_reqs2);
-
-
     VkMemoryAllocateInfo alloc_info2 = {};
     alloc_info2.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
     alloc_info2.pNext = NULL;
     alloc_info2.memoryTypeIndex = 0;
     alloc_info2.allocationSize = mem_reqs2.size;
-
     VkFlags requirements_mask2 = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-
     flag = memoryTypeFromProperties(memoryroperties, mem_reqs2.memoryTypeBits, requirements_mask2, &alloc_info2.memoryTypeIndex);
-    if (flag) { printf("确定内存类型成功 类型索引为%d\n", alloc_info2.memoryTypeIndex); }
+    if (flag) { printf("确定内存类型成功 类型索引�?%d\n", alloc_info2.memoryTypeIndex); }
     else { printf("确定内存类型失败!\n"); }
-
-
     result = vk::vkAllocateMemory(device, &alloc_info2, NULL, &memUniformBuf2);
     assert(result == VK_SUCCESS);
-
-
     result = vk::vkBindBufferMemory(device, uniformBuf2, memUniformBuf2, 0);
     assert(result == VK_SUCCESS);
-
     uniformBufferInfo2.buffer = uniformBuf2;
     uniformBufferInfo2.offset = 0;
     uniformBufferInfo2.range = bufferByteCount2;
@@ -97,7 +85,6 @@ void ShaderQueueSuit_Common::create_pipeline_layout(VkDevice& device)
     layout_bindings[0].descriptorCount = 1;
     layout_bindings[0].stageFlags = VK_SHADER_STAGE_VERTEX_BIT;
     layout_bindings[0].pImmutableSamplers = NULL;
-    /*==================================================================================================*/
     layout_bindings[1].binding = 1;
     layout_bindings[1].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
     layout_bindings[1].descriptorCount = 1;
@@ -128,7 +115,6 @@ void ShaderQueueSuit_Common::create_pipeline_layout(VkDevice& device)
     layout_bindings[6].descriptorCount = 1;
     layout_bindings[6].stageFlags = VK_SHADER_STAGE_FRAGMENT_BIT;
     layout_bindings[6].pImmutableSamplers = NULL;
-
     layout_bindings[7].binding = 7;
     layout_bindings[7].descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
     layout_bindings[7].descriptorCount = 1;
@@ -182,7 +168,6 @@ void ShaderQueueSuit_Common::init_descriptor_set(VkDevice& device)
     type_count[5].descriptorCount = TextureManager::texNames.size()/6;
     type_count[6].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
     type_count[6].descriptorCount = TextureManager::texNames.size()/6;
-
     type_count[7].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
     type_count[7].descriptorCount = TextureManager::texNames.size() / 6;
     VkDescriptorPoolCreateInfo descriptor_pool = {};
@@ -251,7 +236,6 @@ void ShaderQueueSuit_Common::init_descriptor_set(VkDevice& device)
     writes[6].descriptorCount = 1;
     writes[6].descriptorType = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
     writes[6].dstArrayElement = 0;
-
     writes[7] = {};
     writes[7].sType = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
     writes[7].dstBinding = 7;
@@ -274,7 +258,7 @@ void ShaderQueueSuit_Common::create_shader(VkDevice& device)
     std::vector<unsigned int> vtx_spv;
     bool retVal = GLSLtoSPV(VK_SHADER_STAGE_VERTEX_BIT, vertStr.c_str(), vtx_spv);
     assert(retVal);
-    LOGE("顶点着色器脚本编译SPV成功！");
+    LOGE("顶点�?色器脚本编译SPV成功�?");
     VkShaderModuleCreateInfo moduleCreateInfo;
     moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
     moduleCreateInfo.pNext = NULL;
@@ -292,7 +276,7 @@ void ShaderQueueSuit_Common::create_shader(VkDevice& device)
     std::vector<unsigned int> frag_spv;
     retVal = GLSLtoSPV(VK_SHADER_STAGE_FRAGMENT_BIT, fragStr.c_str(), frag_spv);
     assert(retVal);
-    LOGE("片元着色器脚本编译SPV成功！");
+    LOGE("片元�?色器脚本编译SPV成功�?");
     moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
     moduleCreateInfo.pNext = NULL;
     moduleCreateInfo.flags = 0;
